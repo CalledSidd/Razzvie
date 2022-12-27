@@ -43,12 +43,16 @@ class Signup(APIView):
         phone    = body['phone']
         state    = body['state']
         password = body['password']
+        print(username, "Username, New Signup")
         try:
             user = UserAccount.objects.create_user(email =email, name=name, username=username, phone=phone, password=password, state=state)
         except Exception as e:
             print(e, "This is the occured exception")
+            return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(status=status.HTTP_200_OK)
 
+
+# Admin Views
 class ListUser(generics.ListAPIView):
     permission_classes = [AllowAny]
     queryset = UserAccount.objects.all()
@@ -60,5 +64,3 @@ class BlockUser(APIView):
         user = UserAccount.objects.filter(id = id)
         user.is_active = False 
         return Response(status = status.HTTP_200_OK)
-
-
