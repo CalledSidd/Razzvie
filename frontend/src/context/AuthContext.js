@@ -43,6 +43,7 @@ export const AuthProvider = ({children}) => {
                 navigate('/admin')
             }else{
                 navigate('/')
+                
             }
     }else{
         setError(true)
@@ -61,7 +62,7 @@ export const AuthProvider = ({children}) => {
         })
         let data = await response.json()
 
-        if (response.status === 200){
+        if (response.status === 200){  
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens',JSON.stringify(data))
@@ -105,8 +106,10 @@ export const AuthProvider = ({children}) => {
 
     let contextData = {
         user : user, 
+        setUser: setUser,
         login : login,
         authTokens : authTokens,
+        setAuthTokens: setAuthTokens,
         logout : logout,
         error : error
     }

@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,9 +12,12 @@ const customId = "hi";
 const HomePage = () => {
   let { authTokens } = useContext(AuthContext);
   const navigate = useNavigate();
-  const username = jwtDecode(authTokens.access)
+  let username   = jwt_decode(authTokens.access)
+  const name = JSON.stringify(username.username)
+  const finalName = name.replaceAll('"', '')
+  
   const notify = () =>
-    toast.success("Welcome", {
+    toast.success("Welcome "+ finalName, {
       toastId: customId,
       position: "top-right",
       autoClose: 5000,
@@ -27,7 +30,8 @@ const HomePage = () => {
     });
 
   useEffect(() => {
-    if (!authTokens) {
+    if (! authTokens) {
+      console.log("Redirected to login")
       navigate("/login");
     } else {
       notify();

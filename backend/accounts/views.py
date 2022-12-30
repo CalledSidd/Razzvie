@@ -62,7 +62,6 @@ class ListUser(generics.ListAPIView):
 
 
 class BlockUser(APIView):
-    permission_classes``
     def get(self, request, id):
         user = UserAccount.objects.filter(id = id)
         user.is_active = False 
