@@ -15,12 +15,14 @@ import json
 # Create your views here.
 @api_view(['GET'])
 def getRoutes(request):
+    permission_classes = [AllowAny]
     routes = [
         'token',
         'token/refresh',
     ]
     return Response(routes)
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    permission_classes = [AllowAny]
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -30,6 +32,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class MyTokenObtainPairView(TokenObtainPairView):
+    permission_classes = [AllowAny]
     serializer_class = MyTokenObtainPairSerializer
 
 class Signup(APIView):
@@ -54,12 +57,12 @@ class Signup(APIView):
 
 # Admin Views
 class ListUser(generics.ListAPIView):
-    permission_classes = [AllowAny]
     queryset = UserAccount.objects.all()
     serializer_class = UserAccountSerializer
 
 
 class BlockUser(APIView):
+    permission_classes``
     def get(self, request, id):
         user = UserAccount.objects.filter(id = id)
         user.is_active = False 

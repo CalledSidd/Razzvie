@@ -40,6 +40,7 @@ const Signup = () => {
     return (
         <div className='bg-white min-h-screen'>
             <div className="relative flex flex-col  justify-center min-h-screen overflow-hidden ">
+            <h1 className='text-5xl text-center mt-36 font-mono text-black'>Razzvie</h1>
                 <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl  lg:max-w-xl">
                     <h1 className="text-3xl font-semibold text-center text-black ">
                         Signup

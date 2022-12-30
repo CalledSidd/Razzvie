@@ -5,6 +5,7 @@ import { BiMessageRounded } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import { IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
 import { NavLink } from 'react-router-dom';
+import Notifications from '../Notifications/Notifications';
 
 const Sidebar = () => {
     return (
@@ -21,12 +22,17 @@ const Sidebar = () => {
                         <p className='text-white pl-8 text-xl hover:text-cyan-400'><BiMessageRounded /></p>
                     </li>
                     </NavLink>
-                    <NavLink className='no-underline' to='/notifications'>
+                    {/* <NavLink className='no-underline' to='/notifications' >
                     <li className="relative pt-12">
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineHeart /></p>
                     </li>
+                    </NavLink> */}
+                    <NavLink className='no-underline'  >
+                    <li className="relative pt-12" onClick={ <Notifications dataa={true}/>}>
+                        <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineHeart /></p>
+                    </li>
                     </NavLink>
-                    <NavLink className='no-underline' to='/addlisting'>
+                    <NavLink className='no-underline' to='/add-new-post'>
                     <li className="relative pt-12">
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><RiAddCircleLine /></p>
                     </li>
