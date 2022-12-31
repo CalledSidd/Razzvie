@@ -28,12 +28,13 @@ const Signup = () => {
             "email"    : email,
             "phone"    : phone,
             "state"    : state,
-            "password" : password
+            "password" : password,
+            "dob"      : date
             
         }).then((response)=>{
             console.log(response)
             if(response.data === 200){
-                navigete('')
+                navigete('/login')
             }
         })
     }

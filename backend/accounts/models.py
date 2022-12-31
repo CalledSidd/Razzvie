@@ -15,6 +15,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     phone           = models.CharField(max_length=10, unique=True)
     state           = models.CharField(max_length=50)
     dob             = models.DateField(null=True)
+    gender          = models.CharField(max_length=50, blank = True, null= True)
     date_joined     = models.DateTimeField(auto_now_add=True)
     is_active       = models.BooleanField(default=True)
     is_admin        = models.BooleanField(default=False)
