@@ -3,38 +3,22 @@ import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import AuthContext from "../../../context/AuthContext";
-const customId = "hi";
+
 
 
 
 const HomePage = () => {
   let { authTokens } = useContext(AuthContext);
   const navigate = useNavigate();
-  let username   = jwt_decode(authTokens.access)
-  const name = JSON.stringify(username.username)
-  const finalName = name.replaceAll('"', '')
-  
-  const notify = () =>
-    toast.success("Welcome "+ finalName, {
-      toastId: customId,
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+
 
   useEffect(() => {
     if (! authTokens) {
       console.log("Redirected to login")
       navigate("/login");
     } else {
-      notify();
+    
     }
   }, []);
   return (

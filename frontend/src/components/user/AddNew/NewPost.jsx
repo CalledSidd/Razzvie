@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddListing = () => {
+const NewPost = () => {
   return (
     <>
     <div className='flex w-4/5 ml-48'>
@@ -14,4 +14,4 @@ const AddListing = () => {
   )
 }
 
-export default AddListing
+export default NewPost

@@ -6,8 +6,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
 
 
+
+from . permissions import IsAdmin
 from . models import UserAccount
 from . serializers import UserAccountSerializer
 import json
@@ -57,6 +60,8 @@ class Signup(APIView):
 
 # Admin Views
 class ListUser(generics.ListAPIView):
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = ()
     queryset = UserAccount.objects.all()
     serializer_class = UserAccountSerializer
 
