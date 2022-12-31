@@ -48,10 +48,11 @@ class Signup(APIView):
         email    = body['email']
         phone    = body['phone']
         state    = body['state']
+        dob      = body['dob']
         password = body['password']
         print(username, "Username, New Signup")
         try:
-            user = UserAccount.objects.create_user(email =email, name=name, username=username, phone=phone, password=password, state=state)
+            user = UserAccount.objects.create_user(email =email, name=name, username=username, phone=phone, password=password, state=state, dob = dob)
         except Exception as e:
             print(e, "This is the occured exception")
             return Response(status=status.HTTP_403_FORBIDDEN)

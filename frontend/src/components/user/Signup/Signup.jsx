@@ -8,6 +8,7 @@ const Signup = () => {
     const [username, setUsername]  = useState("")
     const [email, setEmail]        = useState("")
     const [phone, setPhone]        = useState("")
+    const [date, setDate]          = useState("")
     const [state, setState]        = useState("")
     const [password, setPassword]  = useState("")
     const [password2, setPassword2]= useState("")
@@ -70,6 +71,13 @@ const Signup = () => {
                             <input type="number" onChange={(e)=>{
                                 setPhone(e.target.value)
                             }} className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                        </div>
+                        <div className="mb-2">
+                            <label for="date" className="block text-sm font-semibold text-gray-800"> Date of Birth </label>
+                            <input type="date" onChange={(e) => {
+                                setDate(e.target.value)
+                            }}
+                            className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40" />
                         </div>
                         <div className="mb-2">
                             <label for="" className="block text-sm font-semibold text-gray-800">State</label>
@@ -139,6 +147,7 @@ const Signup = () => {
                     </p>
                 </div>
             </div>
+            <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
         </div>
     )
 }

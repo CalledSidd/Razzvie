@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Notifications = ({ dataa }) => {
-  console.log(dataa, "this is data passed from home,,,,, ")
   const [showModal, setShowModal] = React.useState(false);
   return (
     <>

@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+
 import Home from './pages/Home/Home';
 import HomePage from './components/user/Home/Home';
-
 import Messaging from './components/user/Messaging/Messaging';
-import Profile from './components/user/Profile/Profile';
 import Settings from './components/user/Settings/Settings';
 import Login from './components/user/Login/Login';
 import Signup from './components/user/Signup/Signup';
@@ -15,6 +15,10 @@ import Post from './components/user/Post/Post';
 import NewPost from './components/user/AddNew/NewPost';
 import Explore from './components/user/Explore/Explore';
 import { AuthProvider } from './context/AuthContext';
+import Profile from './components/user/Profile/UserProfile';
+import UserPosts from './components/user/Profile/UserPosts';
+import Following from './components/user/Profile/Following';
+import Followers from './components/user/Profile/Followers';
 
 function App() {
   return (
@@ -32,7 +36,10 @@ function App() {
               <Route path='/messaging' element={<Messaging/>} />
               <Route path='/add-new-post' element={<NewPost/>}  />
               <Route path='/wallet' element={<Explore/>} />
-              <Route path='/profile' element={<Profile/>} />
+              <Route path='/profile' element={<Profile/>}/>
+              <Route path='/posts'   element={<UserPosts/>} />
+              <Route path='/following' element={<Following/>} />
+              <Route path='/followers' element={<Followers/>} />
               <Route path='/settings' element={<Settings/>} />
           </Route>
         </Routes>
