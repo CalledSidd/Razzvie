@@ -1,26 +1,58 @@
-import jwt_decode from "jwt-decode";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/AuthContext";
 
+import Axios from 'axios';
+
+
+const baseUrl = 'http://127.0.0.1:8000/'
 
 
 
 const HomePage = () => {
-  let { authTokens } = useContext(AuthContext);
+
+
+
+
+
+  let { user, authTokens } = useContext(AuthContext);
+  const [post, setPost]  = useState([]);
+
+
+
+
+
+
   const navigate = useNavigate();
-
-
   useEffect(() => {
     if (! authTokens) {
       console.log("Redirected to login")
       navigate("/login");
-    } else {
-    
+    }else{
+      postlist()
     }
   }, []);
+
+
+  function postlist() {
+    try{
+      Axios.get(baseUrl + "home", {
+        'headers' : {
+          AUthorization : `Bearer ${authTokens.access}`,
+          "Content-type" : "",
+        },
+      }).then((response) => {
+        console.log(response.data, "This is response")
+        setPost(response.data)
+      }).catch((err) => {
+        console.log(err)
+      });
+    } catch (errr) {
+      console.log(errr,'Error')
+    }
+  }
   return (
     <>
       <ToastContainer
@@ -35,31 +67,38 @@ const HomePage = () => {
         pauseOnHover
         theme="dark"
       />
-      <div className="grid grid-cols-3 px-40 content-center pt-12 text-base max-w-[1800px] w-full">
-        <div className="rounded-xl shadow-lg  max-w-md border border-gray-100">
-          <Link to="/post">
-            <img
-              className="rounded-xl w-auto h-auto"
-              src="https://dezartinspire.com/wp-content/uploads/2021/07/5-digital-art-arabian-girl-by-wlop.webp"
-              alt="post-title"
-            />
-            <div className="w-50 h-16">
-              <div className="w-10 h-10 mt-3 ml-5">
-                <img
-                  className="w-10 bg-red-50 h-10 absolute rounded-full"
-                  src="https://us.123rf.com/450wm/alexvolot/alexvolot2004/alexvolot200400026/alexvolot200400026.jpg?ver=6"
-                />
-                <div className=" w-80 h-10 ml-8">
-                  <p className="text-center font-mono pt-2 text-white">
-                    Title For the Post
-                  </p>
+    {
+        post ? post.map((postlist) => {
+          return(
+          <div className="grid grid-cols-3 px-40 content-center pt-12 text-base max-w-[1800px] w-full">
+          <div className="rounded-xl shadow-lg  max-w-md border border-gray-100">
+            <Link to="/post">
+              <img
+                className="rounded-xl w-auto h-auto"
+                src={postlist.image}
+                alt="post-title"
+              />
+              <div className="w-50 h-16">
+                <div className="w-10 h-10 mt-3 ml-5">
+                  <img
+                    className="w-10 bg-red-50 h-10 absolute rounded-full"
+                    src="https://us.123rf.com/450wm/alexvolot/alexvolot2004/alexvolot200400026/alexvolot200400026.jpg?ver=6"
+                  />
+                  <div className=" w-80 h-10 ml-8">
+                    <p className="text-center font-mono pt-2 text-white">
+                        {postlist.title}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
-      </div>
-    </>
+        )
+        }) : <h1>No</h1>
+      }
+      
+      </>
   );
 };
 

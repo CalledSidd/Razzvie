@@ -82,9 +82,14 @@ export const AuthProvider = ({ children }) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         } else {
-            
-
+            forcelogout()
         }
+    }
+
+    let forcelogout = () => {
+        setAuthTokens(null)
+        localStorage.removeItem('authTokens')
+        navigate('/login')
     }
 
 

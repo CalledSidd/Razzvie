@@ -15,7 +15,6 @@ import Post from './components/user/Post/Post';
 import NewPost from './components/user/AddNew/NewPost';
 import Explore from './components/user/Explore/Explore';
 import { AuthProvider } from './context/AuthContext';
-import Profile from './components/user/Profile/UserProfile';
 import UserPosts from './components/user/Profile/UserPosts';
 import Following from './components/user/Profile/Following';
 import Followers from './components/user/Profile/Followers';
@@ -36,10 +35,9 @@ function App() {
               <Route path='/messaging' element={<Messaging/>} />
               <Route path='/add-new-post' element={<NewPost/>}  />
               <Route path='/wallet' element={<Explore/>} />
-              <Route path='/profile' element={<Profile/>}/>
-              <Route path='/posts'   element={<UserPosts/>} />
-              <Route path='/following' element={<Following/>} />
-              <Route path='/followers' element={<Followers/>} />
+              <Route path='/profile' element={<UserPosts/>}/>
+              <Route path='/following' element={<Following/>}/>
+              <Route path='/followers' element={<Followers/>}/>
               <Route path='/settings' element={<Settings/>} />
           </Route>
         </Routes>

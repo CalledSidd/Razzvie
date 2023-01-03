@@ -20,3 +20,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+# class Follows(models.Model):
+#     following  = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+#     followers  = models.CharField(max_length=120) 
+
+
