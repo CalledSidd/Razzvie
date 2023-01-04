@@ -1,9 +1,10 @@
-import axios from 'axios'
+import Axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+const baseUrl = 'http://127.0.0.1:8000/'
 
 const Signup = () => {
-    const navigete                 = useNavigate()
+    const navigate                 = useNavigate()
     const [name, setName]          = useState("")
     const [username, setUsername]  = useState("")
     const [email, setEmail]        = useState("")
@@ -12,33 +13,63 @@ const Signup = () => {
     const [state, setState]        = useState("")
     const [password, setPassword]  = useState("")
     const [password2, setPassword2]= useState("")
-    console.log(state)
-    let Signup = async (e) => {
-        e.preventDefault()
-        if (password.length < 3) {
-            alert("there must be a password")
+    const [error, setError]        = useState("")
+    // let Signup = async (e) => {
+    //     e.preventDefault()
+    //     if (password.length < 3) {
+    //         alert("there must be a password")
+    //     }
+    //     else if(password !== password2 ){
+    //         alert("Wrong Passwords")
+    //     }
+    //     else{
+    //         await axios.post("http://127.0.0.1:8000/account/signup", {
+    //         "name"     : name,
+    //         "username" : username,
+    //         "email"    : email,
+    //         "phone"    : phone,
+    //         "state"    : state,
+    //         "password" : password,
+    //         "dob"      : date
+    //     }).then((response)=>{
+    //         console.log(response)
+    //         if(response.data === 200){
+    //             navigete('/login')
+    //         }
+    //     })
+    // }
+    // }
+    const Signup = (e) => {
+        e.preventDefault();
+        if (password.length < 3 || username.length < 3 || email.length < 5){
+            setError("Please give valid credentials")
+            alert("Credentials do not match")
         }
-        else if(password !== password2 ){
-            alert("Wrong Passwords")
+        else if(password !== password2){
+            setError("Passwords do not match")
+            alert("Passwords do not match")
         }
-        else{
-            await axios.post("http://127.0.0.1:8000/account/signup", {
-            "name"     : name,
-            "username" : username,
-            "email"    : email,
-            "phone"    : phone,
-            "state"    : state,
-            "password" : password,
-            "dob"      : date
-            
-        }).then((response)=>{
-            console.log(response)
-            if(response.data === 200){
-                navigete('/login')
+        else{ 
+                console.log("In singup function axios.post")
+                Axios.post(baseUrl + 'account/signup', {
+                    name : name,
+                    username : username,
+                    email    : email,
+                    phone    : phone,
+                    state    : state,
+                    password : password,
+                    dob      : date
+                }).then((response) => {
+                    console.log(response)
+                    navigate('/login')
+                }).catch((err) => {
+                    console.log(err)
+                })
             }
-        })
-    }
-    }
+        }
+    
+
+
     return (
         <div className='bg-white min-h-screen'>
             <div className="relative flex flex-col  justify-center min-h-screen overflow-hidden ">

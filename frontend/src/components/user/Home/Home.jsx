@@ -4,23 +4,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/AuthContext";
 
+
 import Axios from 'axios';
-
-
-const baseUrl = 'http://127.0.0.1:8000/'
-
+import useAxios from "../../../utils/useAxios";
 
 
 const HomePage = () => {
 
-
-
-
-
   let { user, authTokens } = useContext(AuthContext);
   const [post, setPost]  = useState([]);
-
-
+  let Home = useAxios()
 
 
 
@@ -37,21 +30,13 @@ const HomePage = () => {
 
 
   function postlist() {
-    try{
-      Axios.get(baseUrl + "home", {
-        'headers' : {
-          AUthorization : `Bearer ${authTokens.access}`,
-          "Content-type" : "",
-        },
-      }).then((response) => {
+      Home.get( "home", 
+      ).then((response) => {
         console.log(response.data, "This is response")
         setPost(response.data)
       }).catch((err) => {
         console.log(err)
       });
-    } catch (errr) {
-      console.log(errr,'Error')
-    }
   }
   return (
     <>
@@ -72,7 +57,7 @@ const HomePage = () => {
           return(
           <div className="grid grid-cols-3 px-40 content-center pt-12 text-base max-w-[1800px] w-full">
           <div className="rounded-xl shadow-lg  max-w-md border border-gray-100">
-            <Link to="/post">
+            <Link to={`post/${postlist.id}`}>
               <img
                 className="rounded-xl w-auto h-auto"
                 src={postlist.image}

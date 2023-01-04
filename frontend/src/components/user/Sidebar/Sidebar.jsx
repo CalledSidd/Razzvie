@@ -37,7 +37,7 @@ const Sidebar = () => {
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineCompass /></p>
                     </li>
                     </NavLink>
-                    <NavLink className='no-underline' to='/profile'>
+                    <NavLink className='no-underline' to='/profile  '>
                     <li className="relative pt-12">
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineUser /></p>
                     </li>

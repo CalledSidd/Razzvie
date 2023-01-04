@@ -12,7 +12,7 @@ import Signup from './components/user/Signup/Signup';
 import EnterNo from './components/user/Otp/EnterNo';
 import EnterOtp from './components/user/Otp/EnterOtp';
 import Post from './components/user/Post/Post';
-import NewPost from './components/user/AddNew/NewPost';
+import NewPost from './components/user/Post/NewPost';
 import Explore from './components/user/Explore/Explore';
 import { AuthProvider } from './context/AuthContext';
 import UserPosts from './components/user/Profile/UserPosts';
@@ -31,7 +31,7 @@ function App() {
           <Route path='/otp-login' element={<EnterOtp/>}/>
           <Route path='' element={<Home/>}>
               <Route path='' element={<HomePage/>}/>
-              <Route path='/post' element={<Post/>} />
+              <Route path='/post/:post_id' element={<Post/>} />
               <Route path='/messaging' element={<Messaging/>} />
               <Route path='/add-new-post' element={<NewPost/>}  />
               <Route path='/wallet' element={<Explore/>} />

@@ -1,17 +1,21 @@
-import React from 'react'
+import React from "react";
 
 const Explore = () => {
   return (
     <>
-      <div className='flex w-4/5 ml-48'>
-        <div className='w-full h-full content-center'>
-          <div className='h-full ml-24'>
-            <h1 className='text-white text-2xl text-center'>Explore</h1>
+      <div className="grid grid-cols-3 px-40 content-center pt-12 text-base max-w-[1800px] w-full">
+        <div className="rounded-xl shadow-lg  max-w-md border border-gray-100">
+          <div className="h-1">
+            <div className="w-0 h-10 mt-3 ml-5">
+              <div className=" w-30 h-10 ml-8">
+                <p className="text-center font-mono pt-2 text-white"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Explore
+export default Explore;

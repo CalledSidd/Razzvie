@@ -1,13 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import Axios from "axios"
 import AuthContext from '../../../context/AuthContext'
+import useAxios from '../../../utils/useAxios'
 
-const baseUrl = 'http://127.0.0.1:8000/'
+
 
 const Profile = () => {
-  let {user} = useContext(AuthContext)
 
+  let Pro = useAxios()
+  let {user, authTokens} = useContext(AuthContext)
+  const [userdata, setUserdata] = useState([])
+  const id  = user.user_id
 
+  useEffect(() => {
+    UserPro()
+  }, [])
+
+  const UserPro = () =>{
+      Pro.get( `profile/${id}` ,
+      ).then((response) => {
+        console.log(response.data, "This is the response data")
+        setUserdata(response.data)
+      }).catch((err) => {
+        console.log(err)
+      });
+      } 
+    
 
 
   return (
@@ -22,7 +41,7 @@ const Profile = () => {
             <NavLink to='/profile'>
             <div className='grid  text-center w-24 h-32'>
             <h1 className='text-white text-2xl opacity-25 mt-7 cursor-pointer'>Posts</h1>
-            <h1 className='text-white text-2xl'></h1>
+            <h1 className='text-white text-2xl'>{userdata.count}</h1>
             </div>
             </NavLink>
             <NavLink to='/following'>

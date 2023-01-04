@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode"
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import swal from 'sweetalert'
 import { ToastContainer, toast } from "react-toastify";
@@ -17,7 +16,7 @@ export default AuthContext
 export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(false)
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-    let [user, setUser] = useState(useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null))
+    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [loading, setLoading] = useState()
     const navigate = useNavigate()
 
@@ -91,8 +90,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('authTokens')
         navigate('/login')
     }
-
-
 
     useEffect(() => {
         let fiveminutes = 1000 * 60 * 10

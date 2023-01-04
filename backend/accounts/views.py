@@ -22,6 +22,8 @@ def getRoutes(request):
     routes = [
         'token',
         'token/refresh',
+        'signup',
+        'listuser'
     ]
     return Response(routes)
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
