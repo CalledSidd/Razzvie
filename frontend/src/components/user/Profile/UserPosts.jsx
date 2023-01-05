@@ -2,6 +2,8 @@ import React from "react";
 import Profile from "./UserProfile";
 
 const UserPosts = () => {
+  
+
   return (
     <div>
       <Profile />

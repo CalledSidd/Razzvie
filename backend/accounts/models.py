@@ -7,6 +7,10 @@ from .manager import UserManager
 
 
 
+def dp(instance, filename):
+    return 'pfp/{filename}'.format(filename = filename)
+
+
 # Custom user Model
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     username        = models.CharField(max_length=100, unique=True)
@@ -15,6 +19,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     phone           = models.CharField(max_length=10, unique=True)
     state           = models.CharField(max_length=50)
     dob             = models.DateField(null=True)
+    pfp             = models.ImageField(upload_to= dp, null=True)
     gender          = models.CharField(max_length=50, blank = True, null= True)
     date_joined     = models.DateTimeField(auto_now_add=True)
     is_active       = models.BooleanField(default=True)
@@ -34,4 +39,4 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         today = date.today()
         delta = relativedelta(today, self.dob)
         # return self.name, str(delta.years)
-        return f'{self.name}, {str(delta.years)}'
+        return f'{self.username}, {str(delta.years)}'

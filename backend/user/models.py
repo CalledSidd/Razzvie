@@ -21,4 +21,9 @@ class Post(models.Model):
     def __str__(self):
         return self.user.username
 
-
+class Follow(models.Model):
+    following = models.ForeignKey(UserAccount, related_name='following', on_delete=models.CASCADE)
+    follower  = models.ForeignKey(UserAccount,related_name='follower', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.following.username
+    
