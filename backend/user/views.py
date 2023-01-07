@@ -13,7 +13,10 @@ from rest_framework.permissions import AllowAny
 
 from accounts.models import UserAccount
 from .models import Post,Follow
-from .serializers import ProfileSerializer,HomeSerializer, PostSerializer,FollowSerializer,FollowingSerializer
+from .serializers import (ProfileSerializer,
+        HomeSerializer, NewPostSerializer,
+        PostSerializer,FollowSerializer,
+        FollowingSerializer)
 
 
 # Create your views here.
@@ -25,8 +28,15 @@ def getRoutes(request):
         'home',
         'profile/<int:id>',
         'post/<str:pk>',
+        'userpost/<int:id>',
+        'followers/<int:id>',
+        'following/<int:id>',
+        'newpost',    
     ]
     return Response(routes)
+
+
+
 class Profile(APIView):
     def get_obj(self, id):
         try:
@@ -74,8 +84,17 @@ class UserPosts(APIView):
 
 
 class NewPost(APIView):
-    def post(self, request, id):
-        pass
+    def post(self, request):
+        data = {} 
+        user_id = request.user.id
+        serializer = NewPostSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            data['data'] = serializer.data
+            return Response(data, status = status.HTTP_201_CREATED)
+        else:
+            data['data'] = serializer.errors
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class Followers(APIView):
     def get(self, request, id):
@@ -106,9 +125,3 @@ def ViewPost(request, pk):
         return Response(post.data, status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-@api_view(['PATCH'])
-def LikePost(request, pk):
-    p = Post.objects.get(id = pk)
-    p.likes  = p.likes + 1
-    return Response(p.likes, status = status.HTTP_200_OK)

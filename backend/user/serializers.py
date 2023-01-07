@@ -34,3 +34,9 @@ class FollowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follow
         fields = '__all__'
+
+
+class NewPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'

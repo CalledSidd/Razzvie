@@ -9,5 +9,5 @@ urlpatterns = [
     path('userpost/<int:id>',views.UserPosts.as_view(),name='userPost'),
     path('followers/<int:id>',views.Followers.as_view(),name='followers'),
     path('following/<int:id>',views.Following.as_view(),name='following'),
-    path('likepost/<str:pk>',views.LikePost, name='likePost'),
+    path('newpost',views.NewPost.as_view(),name='newPost'),
 ]
