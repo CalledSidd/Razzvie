@@ -23,7 +23,7 @@ const Sidebar = () => {
                     </li>
                     </NavLink>
                     <NavLink className='no-underline'  >
-                    <li className="relative pt-12" onClick={ <Notifications dataa={true}/>}>
+                    <li className="relative pt-12" onClick={ <Notifications/>}>
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineHeart /></p>
                     </li>
                     </NavLink>

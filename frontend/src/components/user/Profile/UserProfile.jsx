@@ -8,7 +8,7 @@ import useAxios from '../../../utils/useAxios'
 
 const Profile = () => {
 
-  let Pro = useAxios()
+  let API = useAxios()
   let {user, authTokens} = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
   const id  = user.user_id
@@ -18,7 +18,7 @@ const Profile = () => {
   }, [])
 
   const UserPro = () =>{
-      Pro.get( `profile/${id}` ,
+      API.get( `profile/${id}` ,
       ).then((response) => {
         console.log(response.data, "This is the response data")
         setUserdata(response.data)
@@ -47,13 +47,13 @@ const Profile = () => {
             <NavLink to='/following'>
             <div className='grid  text-center w-24 h-32 cursor-pointer'>
             <h1 className='text-white text-2xl opacity-25 mt-7'>Following</h1>
-            <h1 className='text-white text-2xl'>1.2M</h1>
+            <h1 className='text-white text-2xl'>{userdata.following}</h1>
             </div>
             </NavLink>
             <NavLink to='/followers'>
             <div className='grid  text-center w-24 h-32 cursor-pointer'>
             <h1 className='text-white text-2xl opacity-25 mt-7'>Followers</h1>
-            <h1 className='text-white text-2xl'>666</h1>
+            <h1 className='text-white text-2xl'>{userdata.follower}</h1>
             </div>
             </NavLink>
           </div>

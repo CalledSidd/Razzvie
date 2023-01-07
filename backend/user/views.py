@@ -12,8 +12,8 @@ from rest_framework.permissions import AllowAny
 
 
 from accounts.models import UserAccount
-from .models import Post
-from .serializers import ProfileSerializer,HomeSerializer, PostSerializer
+from .models import Post,Follow
+from .serializers import ProfileSerializer,HomeSerializer, PostSerializer,FollowSerializer,FollowingSerializer
 
 
 # Create your views here.
@@ -34,7 +34,7 @@ class Profile(APIView):
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
             print(e, "This is the occured exception")
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def get(self, request, id):
         data = {}
@@ -42,8 +42,12 @@ class Profile(APIView):
         if user is not None:
             users   = ProfileSerializer(user, context = {'request' : request})
             p_count = len(Post.objects.filter(user = id))
-            data['Response'] = 'Success'
-            data['count']    = p_count      
+            following = len(Follow.objects.filter(following = id))
+            follower  = len(Follow.objects.filter(follower=id))
+            data['Response']  = 'Success'
+            data['count']     = p_count 
+            data['following'] = following
+            data['follower']  = follower
             return Response(data, status=status.HTTP_200_OK)
 
 
@@ -62,19 +66,49 @@ class Home(APIView):
 class UserPosts(APIView):
     def get(self, request, id):
         p = Post.objects.filter(user = id)
-        post = HomeSerializer(p, many=True)
+        post = HomeSerializer(p, many=True, context = {'request' : request})
         if p:
             return Response(post.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class ViewPost(APIView):
-    def get(self, request, pk):
-        p    = Post.objects.get(id = pk)
-        post = PostSerializer(p,  context = {'request' : request})
-        print(type(p), "this is the queryset")
-        return Response(post.data, status=status.HTTP_200_OK)
-
 class NewPost(APIView):
-    pass
+    def post(self, request, id):
+        pass
+
+class Followers(APIView):
+    def get(self, request, id):
+        follow = Follow.objects.filter(follower= id)
+        follower = FollowSerializer(follow, many=True)
+        print(follower)
+        return Response(follower.data, status = status.HTTP_200_OK)
+
+
+class Following(APIView):
+    def get(self, request, id):
+        follow  = Follow.objects.filter(following= id)
+        following = FollowingSerializer(follow, many=True)
+        return Response(following.data, status = status.HTTP_200_OK)
+
+
+
+
+
+# Function based Views 
+
+
+@api_view(['GET'])
+def ViewPost(request, pk):
+    p = Post.objects.get(id = pk)
+    post = PostSerializer(p ,context = {'request' : request})
+    if p:
+        return Response(post.data, status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@api_view(['PATCH'])
+def LikePost(request, pk):
+    p = Post.objects.get(id = pk)
+    p.likes  = p.likes + 1
+    return Response(p.likes, status = status.HTTP_200_OK)
