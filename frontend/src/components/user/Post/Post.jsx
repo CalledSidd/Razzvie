@@ -43,7 +43,7 @@ const Post = () => {
       <div className="flex w-4/5 ml-48">
         <div className="w-full h-full content-center">
           <div className="flex justify-start bg-black w-full h-screen max-h-[600px] mt-10">
-            <img className=" h-full w-3/5 min-w-fit max-w-fit" src={post.image}></img>
+            <img className=" h-full w-3/5 max-w-fit" src={post.image}></img>
             <div className=" w-full h-20 text-center rounded-2xl pt-5 mt-9">
               <p className="text-white font-mono text-xl">{postuser.username}</p>
               <p className="text-white font-mono text-xl pt-16">{post.title}</p>

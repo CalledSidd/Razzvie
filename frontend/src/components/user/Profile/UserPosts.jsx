@@ -31,21 +31,23 @@ const UserPosts = () => {
       <div className="flex w-4/5 ml-48">
         <div className="w-full h-full content-center">
           <div className="flex justify-evenly items-center bg-black w-full h-screen max-h-[550px] mt-3 ">
-          {
-            post ? post.map((postlist) => {
-              return (
-                  <Link to={`post/${postlist.id}`}>
-                    <img
-                      className="rounded-xl w-fit h-auto max-h-[400px] mt-5 p-8"
-                      src={postlist.image}
-                      alt="post-image"
-                    />
-                  </Link>
-              )
-            }) : <h1>No</h1>
-          }
+            <div className="grid grid-cols-4 px-40 content-center text-base max-w-[1500px] w-full ">
+              {
+                post ? post.map((postlist) => {
+                  return (
+                    <div className="rounded-xl">
+                        <img
+                          className="rounded-xl w-fit h-72 mt-5 p-8 object-cover"
+                          src={postlist.image}
+                          alt="post-image"
+                        />
+                    </div>
+                  )
+                }) : <h1>No</h1>
+              }
             </div>
           </div>
+        </div>
       </div>
     </div>
   );

@@ -39,4 +39,5 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         today = date.today()
         delta = relativedelta(today, self.dob)
         # return self.name, str(delta.years)
-        return f'{self.username}, {str(delta.years)}'
+        # return f'{self.username}, {str(delta.years)}'
+        return self.username
