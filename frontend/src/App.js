@@ -17,6 +17,7 @@ import { AuthProvider } from './context/AuthContext';
 import UserPosts from './components/user/Profile/UserPosts';
 import Following from './components/user/Profile/Following';
 import Followers from './components/user/Profile/Followers';
+import NewPost from './components/user/Post/NewPost';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path='/followers' element={<Following/>}/>
               <Route path='/following' element={<Followers/>}/>
               <Route path='/settings' element={<Settings/>} />
+              <Route path='/add-new-post' element={<NewPost/>}/>
           </Route>
         </Routes>
         </AuthProvider>

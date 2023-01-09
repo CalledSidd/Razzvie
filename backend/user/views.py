@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.parsers import MultiPartParser
 
 
 from accounts.models import UserAccount
@@ -83,9 +84,11 @@ class UserPosts(APIView):
 
 
 class NewPost(APIView):
+    parser_classes = [MultiPartParser]
     def post(self, request):
         data = {} 
         user_id = request.user.id
+        print(request.data)
         serializer = NewPostSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -93,7 +96,10 @@ class NewPost(APIView):
             return Response(data, status = status.HTTP_201_CREATED)
         else:
             data['data'] = serializer.errors
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            print(serializer.errors)
+            return Response(data,status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class Followers(APIView):
     def get(self, request, id):
@@ -108,8 +114,6 @@ class Following(APIView):
         follow  = Follow.objects.filter(following= id)
         following = FollowingSerializer(follow, many=True)
         return Response(following.data, status = status.HTTP_200_OK)
-
-
 
 
 
