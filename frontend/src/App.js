@@ -12,7 +12,6 @@ import Signup from './components/user/Signup/Signup';
 import EnterNo from './components/user/Otp/EnterNo';
 import EnterOtp from './components/user/Otp/EnterOtp';
 import Post from './components/user/Post/Post';
-import NewPost from './components/user/Post/NewPost';
 import Explore from './components/user/Explore/Explore';
 import { AuthProvider } from './context/AuthContext';
 import UserPosts from './components/user/Profile/UserPosts';
@@ -33,11 +32,10 @@ function App() {
               <Route path='' element={<HomePage/>}/>
               <Route path='/post/:post_id' element={<Post/>} />
               <Route path='/messaging' element={<Messaging/>} />
-              <Route path='/add-new-post' element={<NewPost/>}  />
               <Route path='/wallet' element={<Explore/>} />
               <Route path='/profile' element={<UserPosts/>}/>
-              <Route path='/following' element={<Following/>}/>
-              <Route path='/followers' element={<Followers/>}/>
+              <Route path='/followers' element={<Following/>}/>
+              <Route path='/following' element={<Followers/>}/>
               <Route path='/settings' element={<Settings/>} />
           </Route>
         </Routes>

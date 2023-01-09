@@ -55,7 +55,7 @@ class Profile(APIView):
             following = len(Follow.objects.filter(following = id))
             follower  = len(Follow.objects.filter(follower=id))
             data['Response']  = 'Success'
-            data['count']     = p_count 
+            data['post_count']     = p_count 
             data['following'] = following
             data['follower']  = follower
             return Response(data, status=status.HTTP_200_OK)
@@ -66,7 +66,6 @@ class Home(APIView):
         print(request.user, "This is the request user")
         p = Post.objects.all().order_by('posted_at')
         post = HomeSerializer(p, many=True, context = {'request' : request})
-        print(p, "This is the queryset in home")
         if p:
             return Response(post.data, status=status.HTTP_200_OK)
         else:

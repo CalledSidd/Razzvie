@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import Axios from "axios"
 import AuthContext from '../../../context/AuthContext'
 import useAxios from '../../../utils/useAxios'
 
@@ -9,7 +8,7 @@ import useAxios from '../../../utils/useAxios'
 const Profile = () => {
 
   let API = useAxios()
-  let {user, authTokens} = useContext(AuthContext)
+  let {user} = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
   const id  = user.user_id
 
@@ -37,21 +36,21 @@ const Profile = () => {
             <div className='flex items-center'>
             <img className='w-16 h-16 rounded-full border-2 ' src='https://img.freepik.com/premium-photo/beauty-portrait-blonde-woman-hair-beautiful-blond-dyed-hair-girl-closeup-face-beautiful-makeup-illustration_86390-7133.jpg?w=2000'></img>
             <h1 className='text-white text-2xl p-2'>@{user.username}</h1>
-            <button className='w-16 h-8 rounded-lg bg-blue-600 ml-12'>Follow</button>
+            {/* <button className='w-16 h-8 rounded-lg bg-blue-600 ml-12'>Follow</button> */}
             </div>
             <NavLink to='/profile'>
             <div className='grid  text-center w-24 h-32'>
-            <h1 className='text-white text-2xl mt-12 opacity-50'>Posts : {userdata.count}</h1>
-            </div>
-            </NavLink>
-            <NavLink to='/following'>
-            <div className='grid  text-center w-32 h-32 cursor-pointer'>
-            <h1 className='text-white text-2xl mt-12 opacity-50'>Following: {userdata.following}</h1>
+            <h1 className='text-white text-2xl mt-12 opacity-50'>Posts : {userdata.post_count}</h1>
             </div>
             </NavLink>
             <NavLink to='/followers'>
             <div className='grid  text-center w-32 h-32 cursor-pointer'>
-            <h1 className='text-white text-2xl mt-12 opacity-50'>Followers: {userdata.follower}</h1>
+            <h1 className='text-white text-2xl mt-12 opacity-50'>Followers: {userdata.following}</h1>
+            </div>
+            </NavLink>
+            <NavLink to='/following'>
+            <div className='grid  text-center w-32 h-32 cursor-pointer'>
+            <h1 className='text-white text-2xl mt-12 opacity-50'>Following: {userdata.follower}</h1>
             </div>
             </NavLink>
           </div>

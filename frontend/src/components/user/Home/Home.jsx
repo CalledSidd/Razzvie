@@ -3,22 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/AuthContext";
-
-
-import Axios from 'axios';
 import useAxios from "../../../utils/useAxios";
 
 
 const HomePage = () => {
 
-  let { user, authTokens } = useContext(AuthContext);
+  let {authTokens} = useContext(AuthContext);
   const [post, setPost] = useState([]);
   let API = useAxios()
 
 
 
-
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!authTokens) {
       console.log("Redirected to login")
@@ -27,7 +24,6 @@ const HomePage = () => {
       postlist()
     }
   }, []);
-
 
   function postlist() {
     API.get("home",
@@ -38,6 +34,10 @@ const HomePage = () => {
       console.log(err)
     });
   }
+
+
+
+
   return (
     <>
       <ToastContainer
@@ -73,5 +73,6 @@ const HomePage = () => {
     </>
   );
 };
+
 
 export default HomePage;
