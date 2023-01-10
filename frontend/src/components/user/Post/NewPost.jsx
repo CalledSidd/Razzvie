@@ -58,17 +58,17 @@ const NewPost = () => {
                 aria-hidden="true"
             >
                 <div className="relative ml-96 mt-24 w-full max-w-md h-full md:h-auto">
-                    <div className="relative">
+                    <div className="absolute">
                         <form onSubmit={upload}>
                             <div className="p-6 text-center">
                                 {imgPreview ? (
                                     <img src={imgPreview} alt="post image" />
                                 ) : (
                                     <h1 className="mb-5 text-3xl font-normal underline text-gray-500 dark:text-gray-400 px-24 ">
-                                        <IoMdPhotos size="350px" />
+                                        <IoMdPhotos size="300px" />
                                     </h1>
                                 )}
-                                <div classNameName="pl-5 flex flex-col">
+                                <div className="pl-2 flex flex-row gap-5">
                                     <textarea
                                         id="caption-address"
                                         name="title"
@@ -76,12 +76,13 @@ const NewPost = () => {
                                         placeholder="Add Caption to the post"
                                         onChange={handlePostChange}
                                         autocomplete="text"
-                                        className="h-20 rounded-xl block w-full appearance-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        required
+                                        className="h-18 rounded-xl block w-full appearance-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     />
 
                                     <label
                                         htmlFor="fileUpload"
-                                        className="w-44 text-center text-white bg-indigo-600 hover:bg-indigo-700  font-medium rounded-lg text-sm py-2.5 px-5"
+                                        className="w-44 text-center text-white border border-gray-600 hover:bg-gray-700  font-medium rounded-lg text-sm py-2.5 px-5"
                                     >Upload Image
                                     </label>
                                     <input
@@ -99,7 +100,7 @@ const NewPost = () => {
                                 <button
                                     data-modal-toggle="popup-modal"
                                     type="submit"
-                                    className=" text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 mt-24"
+                                    className=" text-white bg-gray-500 hover:bg-gray-700 focus:ring-4  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2 mt-24"
                                 >
                                     Upload Post
                                 </button>

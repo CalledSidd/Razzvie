@@ -35,8 +35,8 @@ function App() {
               <Route path='/messaging' element={<Messaging/>} />
               <Route path='/wallet' element={<Explore/>} />
               <Route path='/profile' element={<UserPosts/>}/>
-              <Route path='/followers' element={<Following/>}/>
-              <Route path='/following' element={<Followers/>}/>
+              <Route path='/following' element={<Following/>}/>
+              <Route path='/followers' element={<Followers/>}/>
               <Route path='/settings' element={<Settings/>} />
               <Route path='/add-new-post' element={<NewPost/>}/>
           </Route>
