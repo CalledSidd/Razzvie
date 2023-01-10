@@ -13,7 +13,7 @@ from rest_framework.parsers import MultiPartParser
 
 
 from accounts.models import UserAccount
-from .models import Post,Follow
+from .models import Post,Follow,Like
 from .serializers import (ProfileSerializer,
         HomeSerializer, NewPostSerializer,
         PostSerializer,FollowSerializer,
@@ -123,8 +123,18 @@ class Following(APIView):
 @api_view(['GET'])
 def ViewPost(request, pk):
     p = Post.objects.get(id = pk)
-    post = PostSerializer(p ,context = {'request' : request})
+    likes = Like.objects.filter(post = p).count()
+    print(likes,"This is the number of likes for the post")
+    post = PostSerializer(p, context = {'request' : request, 'likes' : likes})
     if p:
         return Response(post.data, status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+@api_view(['POST'])
+def LikePost(request, pk):
+    post = Post.objects.get(id = pk)
+    user = request.user
+    ss = Like.objects.create(post = post, user = user)
+    return Response(status=status.HTTP_201_CREATED)

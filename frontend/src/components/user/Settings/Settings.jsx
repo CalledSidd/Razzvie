@@ -18,11 +18,14 @@ const Settings = () => {
           <div className='w-60 h-9 mt-8 border border-white rounded-lg ml-12'>
             <label className='text-white p-12 align-middle'>Change Password</label>
           </div>
-          <div className='w-60 h-9 mt-8 border border-red-600 rounded-lg ml-12'>
-            <label className='text-red-600 p-12 align-middle'>Deactivate account</label>
-          </div>
           <div className='flex justify-end items-end h-80'>
-            <button onClick={logout} className='bg-black text-white border w-20 h-10 mb-2 mr-6 border-white'>Logout</button>
+          <div className='w-60 h-9 border border-red-600 text-red-600 rounded-lg mr-12 hover:bg-red-600 hover:text-white'>
+            <label className= 'p-12 align-middle'>Deactivate account</label>
+          </div>
+          <div className='w-20 h-9 border border-red-600 text-red-600 rounded-lg mr-12 hover:bg-red-600 hover:text-white'>
+            <button onClick={logout} className='pl-3.5 align-middle '>Logout</button>
+          </div>
+            {/* <button onClick={logout} className='bg-black text-white border w-20 h-10 mb-2 mr-6 border-white'>Logout</button> */}
           </div>
         </div>
       </div>

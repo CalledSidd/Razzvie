@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import Axios from "axios";
 import AuthContext from "../../../context/AuthContext";
 import { AiOutlineHeart, AiOutlineUser,AiOutlineCompass } from "react-icons/ai";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../../utils/useAxios";
 import { format } from "timeago.js";
 
 const Post = () => {
+  const navigate = useNavigate()
   useEffect(() => {
+    if(!authTokens){
+      navigate('/login')
+    }
     ViewPost();
   }, []);
 
@@ -32,10 +36,6 @@ const Post = () => {
   };
 
   const LikePost = () => {
-    API.patch(`likepost/${post_id}`, 
-    ).then((response) => {
-      console.log(response)
-    })
   }
 
   return (

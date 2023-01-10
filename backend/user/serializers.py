@@ -17,6 +17,10 @@ class HomeSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
+    likes = serializers.SerializerMethodField()
+    def get_likes(self, instance):
+        return self.context['likes']
+
     class Meta:
         model = Post
         fields = ('id','image','title','likes','posted_at','user')

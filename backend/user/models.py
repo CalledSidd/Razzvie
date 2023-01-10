@@ -25,7 +25,7 @@ class Post(BaseModel):
     posted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.title
 
 class Follow(models.Model):
     following = models.ForeignKey(UserAccount, related_name='following', on_delete=models.CASCADE)
@@ -39,8 +39,8 @@ class Like(BaseModel):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} Like"
-    
+        return f"{self.user} likes {self.post}"
+
     class Meta:
         unique_together = (("user","post"),)
         ordering = ["-created_at"]
