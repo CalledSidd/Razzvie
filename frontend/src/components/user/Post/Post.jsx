@@ -17,7 +17,7 @@ const Post = () => {
 
   let { authTokens } = useContext(AuthContext);
   const [post, setPost] = useState([]);
-  const [likes, setLikes] = useState(0)
+  const [likes, setLikes] = useState([])
   const { post_id } = useParams();
   const [postuser, setPostuser] = useState("");
   console.log(post_id);
@@ -29,6 +29,7 @@ const Post = () => {
         console.log(response);
         setPostuser(response.data.user);
         setPost(response.data);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -36,6 +37,14 @@ const Post = () => {
   };
 
   const LikePost = () => {
+    console.log("IN LIKE POST")
+    API.post(`likepost/${post_id}`, 
+    ).then((response) => {
+      console.log(response.data)
+      setLikes(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   return (
@@ -47,11 +56,11 @@ const Post = () => {
             <div className=" w-full h-20 text-center rounded-2xl pt-5 mt-9">
               <p className="text-white font-mono text-xl">{postuser.username}</p>
               <p className="text-white font-mono text-xl pt-16">{post.title}</p>
-              <p className="text-white opacity-25 pt-7">{format(post.posted_at)}</p>
+              <p className="text-white opacity-50 pt-7">{format(post.posted_at)}</p>
               <div onClick={LikePost}>
               <span className="flex justify-center text-white text-3xl pt-20 items-center" ><AiOutlineHeart /></span>
               </div>
-              <span className="text-white opacity-25 pt-7">{post.likes}</span>
+              <span className="text-white opacity-50 pt-7">{post.likes}</span>
             </div>
           </div>
         </div>

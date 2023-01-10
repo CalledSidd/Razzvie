@@ -20,6 +20,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     state           = models.CharField(max_length=50)
     dob             = models.DateField(null=True)
     pfp             = models.ImageField(upload_to= dp, null=True)
+    bio             = models.TextField(max_length=500, null=True)
     gender          = models.CharField(max_length=50, blank = True, null= True)
     date_joined     = models.DateTimeField(auto_now_add=True)
     is_active       = models.BooleanField(default=True)
@@ -38,6 +39,4 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         today = date.today()
         delta = relativedelta(today, self.dob)
-        # return self.name, str(delta.years)
-        # return f'{self.username}, {str(delta.years)}'
         return self.username

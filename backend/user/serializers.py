@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from accounts.serializers import UserSerializer
-from . models import Post,Follow
+from . models import Post,Follow,Like
 from accounts.models import UserAccount
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -20,7 +20,6 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     likes = serializers.SerializerMethodField()
     def get_likes(self, instance):
         return self.context['likes']
-
     class Meta:
         model = Post
         fields = ('id','image','title','likes','posted_at','user')
@@ -43,4 +42,9 @@ class FollowingSerializer(serializers.ModelSerializer):
 class NewPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
+        fields = '__all__'
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
         fields = '__all__'

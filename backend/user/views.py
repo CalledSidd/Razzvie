@@ -17,7 +17,7 @@ from .models import Post,Follow,Like
 from .serializers import (ProfileSerializer,
         HomeSerializer, NewPostSerializer,
         PostSerializer,FollowSerializer,
-        FollowingSerializer)
+        FollowingSerializer, LikeSerializer)
 
 
 # Create your views here.
@@ -133,8 +133,10 @@ def ViewPost(request, pk):
 
 
 @api_view(['POST'])
-def LikePost(request, pk):
+def LikePost(request, pk):  
     post = Post.objects.get(id = pk)
     user = request.user
     ss = Like.objects.create(post = post, user = user)
-    return Response(status=status.HTTP_201_CREATED)
+    likes = Like.objects.filter(post = post).count()
+    like = PostSerializer(post, context = {'request' : request, 'likes' : likes})
+    return Response(like.data, status=status.HTTP_201_CREATED)
