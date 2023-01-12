@@ -1,24 +1,37 @@
 from django.shortcuts import render
 from django.core.serializers import serialize
 from django.http import QueryDict
+from django.shortcuts import get_object_or_404
 
 
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import (
+    GenericAPIView,
+    ListCreateAPIView,
+    RetrieveDestroyAPIView,
+    )
 from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser
 
 
 from accounts.models import UserAccount
-from .models import Post,Follow,Like
+from .models import Post,Follow,Like,Comment
+from .permissions import IsAuthor
 from .serializers import (ProfileSerializer,
-        HomeSerializer, NewPostSerializer,
-        PostSerializer,FollowSerializer,
-        FollowingSerializer, LikeSerializer,
-        ChangePasswordSerializer,)
+        HomeSerializer,
+        NewPostSerializer,
+        PostSerializer,
+        FollowSerializer,
+        FollowingSerializer, 
+        LikeSerializer,
+        ChangePasswordSerializer,
+        UserDataSerializer,
+        CommentSerializer,
+        
+        )
 
 
 # Create your views here.
@@ -33,7 +46,9 @@ def getRoutes(request):
         'userpost/<int:id>',
         'followers/<int:id>',
         'following/<int:id>',
-        'newpost',    
+        'newpost', 
+        'likepost/<str:pk>',
+        'comments',
     ]
     return Response(routes)
 
@@ -116,17 +131,25 @@ class Following(APIView):
         following = FollowingSerializer(follow, many=True)
         return Response(following.data, status = status.HTTP_200_OK)
 
+class PostComments(ListCreateAPIView):
+    serializer_class = CommentSerializer
+    def get_queryset(self):
+        return Comment.objects.order_by('-created_at').filter(post_id = self.kwargs['pk'])
+    def perform_create(self, serializer):
+        post = Post.objects.get(id = self.kwargs['pk'])
+        return serializer.save(user = request.user, post = post)
 
-class ChangePassword(APIView):
-    def get_obj(self, request):
-        try:
-            user_id = request.user.id
-            return Accounts.objects.get(id = user_id)
-        except Accounts.DoesNotExist:
-            raise ValueError({'Message': 'User does not exist'})
-    def put(self, request):
-        self.object = self.get_obj(request)
-        serializer = ChangePasswordSerializer(data = request.data)
+
+
+class DeleteComment(RetrieveDestroyAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthor]
+    def get_object(self):
+        comment = get_object_or_404(Comment, id = self.kwargs['pk'],
+        post_id = self.kwargs['pk'])
+        self.check_object_permissions(self.request, comment)
+        return comment
+
 
 # Function based Views 
 
@@ -143,6 +166,7 @@ def ViewPost(request, pk):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+
 @api_view(['POST'])
 def LikePost(request, pk):  
     post = Post.objects.get(id = pk)
@@ -151,3 +175,13 @@ def LikePost(request, pk):
     likes = Like.objects.filter(post = post).count()
     like = PostSerializer(post, context = {'request' : request, 'likes' : likes})
     return Response(like.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def ChangePassword(request):
+    data = ChangePasswordSerializer(data = request.data)
+    if data.is_valid():
+        request.user.set_password(data.validated_data['password'])
+        request.user.save()
+        return Response(status = status.HTTP_200_OK)
+    return Response(data.errors, status = status.HTTP_400_BAD_REQUEST)

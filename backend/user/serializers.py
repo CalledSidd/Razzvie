@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from accounts.serializers import UserSerializer
-from . models import Post,Follow,Like
+from . models import Post,Follow,Like,Comment
 from accounts.models import UserAccount
+from django.contrib.auth.hashers import make_password
 import re
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -52,17 +53,22 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
-    password_2 = serializers.CharField(required = True)
+    password = serializers.CharField(max_length = 120)
+    confirm_password = serializers.CharField(max_length=120)
     def validate(self, data):
-        password = data['password']
-        password_2 = data['password_2']
-        password_pattern = re.compile(r'^[a-zA-Z0-9]{8}[0-9]*[A-Za-z]*$')
-        password_verify = password_pattern.search(password_2)
-        if password == password_2:
-            raise serializers.ValidationError(
-                {"password_2": "New Password is too similiar to the old passord"}
-                )
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError('Passwords do not match')
         return data
+
+
+class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Accounts
-        fields = ['password', 'password_2']
+        model = UserAccount
+        fields = ['username', 'bio', 'name', 'email', 'date_joined', 'phone']
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Comment
+        fields = ['id', 'comment', 'created_at', 'post', 'user']
+        read_only_fields = ['created_at', 'id']
