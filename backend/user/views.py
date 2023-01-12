@@ -17,7 +17,8 @@ from .models import Post,Follow,Like
 from .serializers import (ProfileSerializer,
         HomeSerializer, NewPostSerializer,
         PostSerializer,FollowSerializer,
-        FollowingSerializer, LikeSerializer)
+        FollowingSerializer, LikeSerializer,
+        ChangePasswordSerializer,)
 
 
 # Create your views here.
@@ -116,6 +117,16 @@ class Following(APIView):
         return Response(following.data, status = status.HTTP_200_OK)
 
 
+class ChangePassword(APIView):
+    def get_obj(self, request):
+        try:
+            user_id = request.user.id
+            return Accounts.objects.get(id = user_id)
+        except Accounts.DoesNotExist:
+            raise ValueError({'Message': 'User does not exist'})
+    def put(self, request):
+        self.object = self.get_obj(request)
+        serializer = ChangePasswordSerializer(data = request.data)
 
 # Function based Views 
 
