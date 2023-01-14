@@ -11,7 +11,7 @@ def posts(instance, filename):
     return 'post/{filename}'.format(filename = filename)
 
 class BaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    id = models.UUIDField(primary_key=True,editable=False,default=uuid.uuid4)
     class Meta:
         abstract = True
 
@@ -26,6 +26,8 @@ class Post(BaseModel):
 
     def __str__(self):
         return self.title
+    def get_comment_count(self):
+        return self.comments.count()
 
 class Follow(models.Model):
     following = models.ForeignKey(UserAccount, related_name='following', on_delete=models.CASCADE)

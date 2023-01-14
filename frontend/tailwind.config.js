@@ -4,9 +4,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'nithya-gray':'#272727',
+      }
+    },
   },
   plugins: [
-    
+    require('tailwind-scrollbar'),
   ],
+  variants: {
+    scrollbar: ['rounded']
+  }
 }

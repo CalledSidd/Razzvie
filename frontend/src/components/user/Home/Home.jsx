@@ -59,11 +59,11 @@ const HomePage = () => {
               <div className="rounded-xl shadow-md border border-gray-700 shadow-gray-800 flex items-center justify-center m-5">
                 <Link to={`post/${postlist.id}`}>
                   <img
-                    className="rounded-xl w-fit h-72 mt-5 p-8 object-cover"
+                    className="rounded-t-xl w-fit h-72 object-cover"
                     src={postlist.image}
                     alt="post-image"
                   />
-                  <p className="text-white text-lg font-mono flex justify-center">{postlist.user.username}</p>
+                  <p className="text-white text-lg font-mono flex justify-center p-2">{postlist.user.username}</p>
                 </Link>
               </div>
             )

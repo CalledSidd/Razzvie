@@ -49,6 +49,8 @@ def getRoutes(request):
         'newpost', 
         'likepost/<str:pk>',
         'comments',
+        'password/change',
+        'deletepost/<int:id>',
     ]
     return Response(routes)
 
@@ -137,7 +139,7 @@ class PostComments(ListCreateAPIView):
         return Comment.objects.order_by('-created_at').filter(post_id = self.kwargs['pk'])
     def perform_create(self, serializer):
         post = Post.objects.get(id = self.kwargs['pk'])
-        return serializer.save(user = request.user, post = post)
+        return serializer.save(user = self.request.user, post = post)
 
 
 
@@ -149,6 +151,14 @@ class DeleteComment(RetrieveDestroyAPIView):
         post_id = self.kwargs['pk'])
         self.check_object_permissions(self.request, comment)
         return comment
+
+class DeletePost(RetrieveDestroyAPIView):
+    serializer_class = PostSerializer 
+    permission_classes = [IsAuthor]
+    def get_object(self):
+        post = get_object_or_404(Post, id = self.kwargs['pk'])
+        self.check_object_permissions(self.request, post)
+        return post
 
 
 # Function based Views 
@@ -173,7 +183,7 @@ def LikePost(request, pk):
     user = request.user
     ss = Like.objects.create(post = post, user = user)
     likes = Like.objects.filter(post = post).count()
-    like = PostSerializer(post, context = {'request' : request, 'likes' : likes})
+    like = PostsSerializer(post, context = {'request' : request, 'likes' : likes})
     return Response(like.data, status=status.HTTP_201_CREATED)
 
 
