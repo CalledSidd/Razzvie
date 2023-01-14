@@ -14,7 +14,6 @@ urlpatterns = [
     # get for all comments post for new comment
     path('comments/<str:pk>',views.PostComments.as_view(),name='comments'),
     # send delete request for deleting a comment
-    
     path('deletecomments/<int:id>',views.DeleteComment.as_view(),name='deletecomment'),
     path('password/change',views.ChangePassword, name='changepassword'),
     # send delete req for this url
