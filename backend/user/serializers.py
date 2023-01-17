@@ -81,3 +81,9 @@ class PostsSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'user','posted_at']
         read_only_fields = ['id', 'user', 'posted_at']
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required = True)
+    class Meta:
+        model = UserAccount()

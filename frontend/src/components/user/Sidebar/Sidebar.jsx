@@ -32,7 +32,7 @@ const Sidebar = () => {
                         <p className='text-white pl-8 text-xl  hover:text-cyan-400'><RiAddCircleLine /></p>
                     </li>
                     </NavLink>
-                    <NavLink className='no-underline' to='/wallet' >
+                    <NavLink className='no-underline' to='/explore' >
                         <li className="relative pt-12">
                             <p className='text-white pl-8 text-xl  hover:text-cyan-400'><AiOutlineCompass /></p>
                         </li>

@@ -18,6 +18,7 @@ from rest_framework.parsers import MultiPartParser
 
 
 from accounts.models import UserAccount
+from accounts.serializers import UserAccountSerializer
 from .models import Post,Follow,Like,Comment
 from .permissions import IsAuthor
 from .serializers import (ProfileSerializer,
@@ -49,6 +50,7 @@ def getRoutes(request):
         'newpost', 
         'likepost/<str:pk>',
         'comments',
+        'deletecomment/<int:id>',
         'password/change',
         'deletepost/<int:id>',
     ]
@@ -91,6 +93,7 @@ class Home(APIView):
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+
 class UserPosts(APIView):
     def get(self, request, id):
         p = Post.objects.filter(user = id)
@@ -101,7 +104,6 @@ class UserPosts(APIView):
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class NewPost(APIView):
     parser_classes = [MultiPartParser]
     def post(self, request):
         data = {} 
@@ -141,14 +143,21 @@ class PostComments(ListCreateAPIView):
         post = Post.objects.get(id = self.kwargs['pk'])
         return serializer.save(user = self.request.user, post = post)
 
+class LikePost(APIView):
+    def post(self, request, pk):
+        post = Post.objects.get(id = pk)
+        user = request.user
+        ss = Like.objects.create(post = post, user = user)
+        likes = Like.objects.filter(post = post).count()
+        like = PostSerializer(post, context = {'request' : request, 'likes' : likes})
+        return Response(like.data, status=status.HTTP_201_CREATED)
 
 
 class DeleteComment(RetrieveDestroyAPIView):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthor]
     def get_object(self):
-        comment = get_object_or_404(Comment, id = self.kwargs['pk'],
-        post_id = self.kwargs['pk'])
+        comment = get_object_or_404(Comment, id = self.kwargs['pk'])
         self.check_object_permissions(self.request, comment)
         return comment
 
@@ -159,6 +168,15 @@ class DeletePost(RetrieveDestroyAPIView):
         post = get_object_or_404(Post, id = self.kwargs['pk'])
         self.check_object_permissions(self.request, post)
         return post
+
+
+
+class Explore(APIView):
+    def get(self, request):
+        user = UserAccount.objects.all().filter(is_active=True)
+        users = UserAccountSerializer(user, many=True)
+        return Response(users.data, status = status.HTTP_200_OK)
+
 
 
 # Function based Views 
@@ -174,17 +192,6 @@ def ViewPost(request, pk):
         return Response(post.data, status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-
-@api_view(['POST'])
-def LikePost(request, pk):  
-    post = Post.objects.get(id = pk)
-    user = request.user
-    ss = Like.objects.create(post = post, user = user)
-    likes = Like.objects.filter(post = post).count()
-    like = PostsSerializer(post, context = {'request' : request, 'likes' : likes})
-    return Response(like.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

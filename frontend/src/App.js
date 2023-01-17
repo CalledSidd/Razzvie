@@ -33,7 +33,7 @@ function App() {
               <Route path='' element={<HomePage/>}/>
               <Route path='/post/:post_id' element={<Post/>} />
               <Route path='/messaging' element={<Messaging/>} />
-              <Route path='/wallet' element={<Explore/>} />
+              <Route path='/explore' element={<Explore/>} />
               <Route path='/profile' element={<UserPosts/>}/>
               <Route path='/following' element={<Following/>}/>
               <Route path='/followers' element={<Followers/>}/>

@@ -25,9 +25,13 @@ const Settings = () => {
     <>
       <div className='w-4/5 ml-48 '>
         <div className='w-full h-full content-center'>
-          <div className='h-12 w-52 mt-28'>
-            <label>Change Username</label>
-            <input className='w-full h-full rounded-lg' placeholder={user.username}/>
+          <div className='h-12 w-52 mt-16'>
+            <label className='text-white p-3 text-sm'>Change Username</label>
+            <input className='w-full h-full rounded-lg bg-transparent border border-black p-3 mt-3' placeholder={user.username}/>
+          </div>
+          <div className='h-12 w-52 mt-16'>
+            <label className='text-white p-3 text-sm'>Change Email</label>
+            <input className='w-full h-full rounded-lg bg-transparent border border-black p-3 mt-3' placeholder={user.email}/>
           </div>
           <div className='flex justify-end items-end h-80'>
           <div className='w-20 h-9 border border-red-600 text-red-600 rounded-lg mr-12 hover:bg-red-600 hover:text-white'>
@@ -37,7 +41,6 @@ const Settings = () => {
           </div>
         </div>
       </div>
-      
     </>
   )
   {/* Modal for User*/}
