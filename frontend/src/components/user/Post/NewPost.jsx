@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NewPost = () => {
     let { user, authTokens } = useContext(AuthContext)
+    const [imgPreview, setImgPreview] = useState("")
     const baseUrl = 'http://localhost:8000/'
     const [postData, setPostData] = useState({
         title: "",
@@ -14,7 +15,6 @@ const NewPost = () => {
         user: user.user_id,
     })
     const navigate = useNavigate();
-    const [imgPreview, setImgPreview] = useState("")
     const handlePostChange = (e) => {
         setPostData({
             ...postData,

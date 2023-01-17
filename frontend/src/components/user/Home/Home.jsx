@@ -34,10 +34,6 @@ const HomePage = () => {
       console.log(err)
     });
   }
-
-
-
-
   return (
     <>
       <ToastContainer

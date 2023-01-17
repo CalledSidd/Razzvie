@@ -89,6 +89,16 @@ const Post = () => {
     })
   }
 
+  const DeletePost = () => {
+    API.delete(`deletepost/${post_id}`).then((response) => {
+      console.log(response.data)
+      console.log("Deleted Post")
+      Setstate(Math.random())
+      navigate('/')
+    })
+
+  }
+
 
   return (
     <>
@@ -100,6 +110,9 @@ const Post = () => {
           <div className="flex justify-around p-3 bg-[#272727]">
             <div className="h-10 w-10 rounded-full bg-white"></div>
             <p className="text-white text-xl font-mono pr-28">{postuser.username}</p>
+            { (user.username === postuser.username) &&
+              <p className="text-white mt-2" onClick={DeletePost}><AiOutlineDelete/></p>
+            }
             <p className="text-white text-xl font-mono">{post.title}</p>
             <p className="text-white text-sm font-mono pt-2 opacity-50 ">{format(post.posted_at)}</p>
           </div>

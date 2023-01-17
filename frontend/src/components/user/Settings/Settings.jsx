@@ -4,10 +4,10 @@ import useAxios from '../../../utils/useAxios'
 
 const Settings = () => {
 
+  const [data, setData] = useState("")
   let API = useAxios()
   let { user, logout } = useContext(AuthContext)
   const id = user.user_id 
-  const [data, setData] = useState("")
   useEffect(() => {
     UserData()
   }, [])

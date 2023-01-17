@@ -14,31 +14,6 @@ const Signup = () => {
     const [password, setPassword]  = useState("")
     const [password2, setPassword2]= useState("")
     const [error, setError]        = useState("")
-    // let Signup = async (e) => {
-    //     e.preventDefault()
-    //     if (password.length < 3) {
-    //         alert("there must be a password")
-    //     }
-    //     else if(password !== password2 ){
-    //         alert("Wrong Passwords")
-    //     }
-    //     else{
-    //         await axios.post("http://127.0.0.1:8000/account/signup", {
-    //         "name"     : name,
-    //         "username" : username,
-    //         "email"    : email,
-    //         "phone"    : phone,
-    //         "state"    : state,
-    //         "password" : password,
-    //         "dob"      : date
-    //     }).then((response)=>{
-    //         console.log(response)
-    //         if(response.data === 200){
-    //             navigete('/login')
-    //         }
-    //     })
-    // }
-    // }
     const Signup = (e) => {
         e.preventDefault();
         if (password.length < 3 || username.length < 3 || email.length < 5){
