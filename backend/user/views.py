@@ -18,7 +18,6 @@ from rest_framework.parsers import MultiPartParser
 
 
 from accounts.models import UserAccount
-from accounts.serializers import UserAccountSerializer
 from .models import Post,Follow,Like,Comment
 from .permissions import IsAuthor
 from .serializers import (ProfileSerializer,
@@ -31,7 +30,7 @@ from .serializers import (ProfileSerializer,
         ChangePasswordSerializer,
         UserDataSerializer,
         CommentSerializer,
-        
+        ExploreSerializer,
         )
 
 
@@ -173,8 +172,8 @@ class DeletePost(RetrieveDestroyAPIView):
 
 class Explore(APIView):
     def get(self, request):
-        user = UserAccount.objects.all().filter(is_active=True)
-        users = UserAccountSerializer(user, many=True)
+        user = UserAccount.objects.all().filter(is_active=True).exclude(is_admin=True)
+        users = ExploreSerializer(user, many=True, context = {'request': request})
         return Response(users.data, status = status.HTTP_200_OK)
 
 

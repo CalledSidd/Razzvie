@@ -13,6 +13,11 @@ def dp(instance, filename):
 
 # Custom user Model
 class UserAccount(AbstractBaseUser, PermissionsMixin):
+    GENDER = {
+        ('Male','Male'),
+        ('Female','Female'),
+        ('Other','Other'),
+    }
     username        = models.CharField(max_length=100, unique=True)
     name            = models.CharField(max_length=100)
     email           = models.EmailField(unique=True)
@@ -21,7 +26,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     dob             = models.DateField(null=True)
     pfp             = models.ImageField(upload_to= dp, null=True)
     bio             = models.TextField(max_length=500, null=True)
-    gender          = models.CharField(max_length=50, blank = True, null= True)
+    gender          = models.CharField(max_length=50, choices=GENDER, blank = True, null= True)
     date_joined     = models.DateTimeField(auto_now_add=True)
     is_active       = models.BooleanField(default=True)
     is_admin        = models.BooleanField(default=False)
