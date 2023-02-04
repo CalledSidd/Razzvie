@@ -10,10 +10,14 @@ const Profile = () => {
   let API = useAxios()
   let {user} = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
+  const [follower, setFollower] = useState([])
+  const [following, setFollowing] = useState([])
   const id  = user.user_id
 
   useEffect(() => {
     UserPro()
+    Follower()
+    Following()
   }, [])
 
   const UserPro = () =>{
@@ -25,7 +29,24 @@ const Profile = () => {
         console.log(err)
       });
       } 
-    
+  const Follower = () => {
+    API.get(`followers/${id}` ,
+    ).then((response) => {
+      console.log(response.data, "This is the number of followers of the user", user.username, id)
+      setFollower(response.data)
+      console.log(follower.name, ":This is follower")
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+  const Following = () => {
+    API.get(`following/${id}`,
+    ).then((response) => {
+      setFollowing(response.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
 
   return (

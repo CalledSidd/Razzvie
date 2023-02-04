@@ -17,14 +17,6 @@ class HomeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
-    likes = serializers.SerializerMethodField()
-    def get_likes(self, instance):
-        return self.context['likes']
-    class Meta:
-        model = Post
-        fields = ('id','image','title','likes','posted_at','user')
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -87,3 +79,13 @@ class ExploreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserAccount()
         fields = ('id', 'username', 'bio', 'date_joined', 'pfp', 'gender','state', 'phone','email','name')
+
+
+class PostSerializer(serializers.HyperlinkedModelSerializer):
+    user = UserSerializer()
+    likes = serializers.SerializerMethodField()
+    def get_likes(self, instance):
+        return self.context['likes']
+    class Meta:
+        model = Post
+        fields = ('id','image','title','likes','posted_at','user')

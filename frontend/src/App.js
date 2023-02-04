@@ -34,11 +34,11 @@ function App() {
               <Route path='/post/:post_id' element={<Post/>} />
               <Route path='/messaging' element={<Messaging/>} />
               <Route path='/explore' element={<Explore/>} />
+              <Route path='/settings' element={<Settings/>} />
+              <Route path='/add-new-post' element={<NewPost/>}/>
               <Route path='/profile' element={<UserPosts/>}/>
               <Route path='/following' element={<Following/>}/>
               <Route path='/followers' element={<Followers/>}/>
-              <Route path='/settings' element={<Settings/>} />
-              <Route path='/add-new-post' element={<NewPost/>}/>
           </Route>
         </Routes>
         </AuthProvider>
