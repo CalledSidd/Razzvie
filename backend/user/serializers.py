@@ -5,10 +5,10 @@ from accounts.models import UserAccount
 from django.contrib.auth.hashers import make_password
 import re
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.HyperlinkedModelSerializer): 
     class Meta:
-        model = Post
-        fields = '__all__'
+        model = UserAccount
+        fields = ('id', 'username', 'bio', 'date_joined', 'pfp', 'gender','state', 'phone','email','name')
 
 class HomeSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -77,7 +77,7 @@ class PostsSerializer(serializers.ModelSerializer):
 
 class ExploreSerializer(serializers.HyperlinkedModelSerializer): 
     class Meta:
-        model = UserAccount()
+        model = UserAccount
         fields = ('id', 'username', 'bio', 'date_joined', 'pfp', 'gender','state', 'phone','email','name')
 
 

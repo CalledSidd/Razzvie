@@ -19,6 +19,7 @@ import Following from './components/user/Profile/Following';
 import Followers from './components/user/Profile/Followers';
 import NewPost from './components/user/Post/NewPost';
 
+
 function App() {
   return (
     <div className="App">

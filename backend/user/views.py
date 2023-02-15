@@ -65,7 +65,6 @@ class Profile(APIView):
         except Exception as e:
             print(e, "This is the occured exception")
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
     def get(self, request, id):
         data = {}
         user = self.get_obj(id)
@@ -91,8 +90,6 @@ class Home(APIView):
         else:
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
-
 class UserPosts(APIView):
     def get(self, request, id):
         p = Post.objects.filter(user = id)
@@ -101,8 +98,6 @@ class UserPosts(APIView):
             return Response(post.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
     parser_classes = [MultiPartParser]
     def post(self, request):
         data = {} 
@@ -118,15 +113,12 @@ class UserPosts(APIView):
             print(serializer.errors)
             return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
-
-
 class Followers(APIView):
     def get(self, request, id):
         follow = Follow.objects.filter(follower= id)
         follower = FollowSerializer(follow, many=True)
         print(follower)
         return Response(follower.data, status = status.HTTP_200_OK)
-
 
 class Following(APIView):
     def get(self, request, id):
@@ -151,7 +143,6 @@ class LikePost(APIView):
         like = PostSerializer(post, context = {'request' : request, 'likes' : likes})
         return Response(like.data, status=status.HTTP_201_CREATED)
 
-
 class DeleteComment(RetrieveDestroyAPIView):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthor]
@@ -167,8 +158,6 @@ class DeletePost(RetrieveDestroyAPIView):
         post = get_object_or_404(Post, id = self.kwargs['pk'])
         self.check_object_permissions(self.request, post)
         return post
-
-
 
 class Explore(APIView):
     def get(self, request):

@@ -108,7 +108,7 @@ const Post = () => {
         </div>
         <div className=" w-full h-full p-3">
           <div className="flex justify-around p-3 bg-[#272727]">
-            <div className="h-10 w-10 rounded-full bg-white"></div>
+            <img className="h-10 w-10 rounded-full bg-white" src={postuser.pfp}></img>
             <p className="text-white text-xl font-mono pr-28">{postuser.username}</p>
             { (user.username === postuser.username) &&
               <p className="text-white mt-2" onClick={DeletePost}><AiOutlineDelete/></p>
